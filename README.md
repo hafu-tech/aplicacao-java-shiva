@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/assets/logo.png" alt="HafuTech Logo" width="250px">
+  <img src="site/web-data-viz/public/assets/logo.png" alt="HafuTech Logo" width="250px">
   <h1> HafuTech</h1>
   <h2>Shiva - Aplicação em Java  para processamento e tratamento de dados</h2>
   <h3>✨ Nossa Educação, Nosso Futuro ✨</h3>
