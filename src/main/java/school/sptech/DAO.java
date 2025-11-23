@@ -10,9 +10,9 @@ public class DAO {
     public DAO() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://container-bd:3306/hafutech?useSSL=false&serverTimezone=UTC");
-        dataSource.setUsername("root");
-            dataSource.setPassword("@Hafu2025");
+        dataSource.setUrl("jdbc:mysql://mysql:3306/hafutech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+        dataSource.setUsername("henry");;
+        dataSource.setPassword("123");;
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
