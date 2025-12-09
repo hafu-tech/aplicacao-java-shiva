@@ -58,6 +58,7 @@ public class LeitorExcel {
                 escola.setValorInse(row.getCell(7).getNumericCellValue());
                 escola.setInseClassificacao2014(row.getCell(8).getStringCellValue());
                 escola.setInseClassificacao2015(row.getCell(9).getStringCellValue());
+                escola.setRegiao(row.getCell(10).getStringCellValue());
 
                 escolasExtraidas.add(escola);
             }

@@ -11,8 +11,8 @@ public class DAO {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://3.225.191.55:3306/hafutech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
-        dataSource.setUsername("henry");;
-        dataSource.setPassword("123");;
+        dataSource.setUsername("root");;
+        dataSource.setPassword("@Hafu2025");;
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -23,8 +23,8 @@ public class DAO {
                 """
                 INSERT INTO Escola
                 (ano, id_municipio, id_escola, area, localizacao, rede,
-                 inse_qtd_alunos, valor_inse, inse_classificacao2014, inse_classificacao2015)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 inse_qtd_alunos, valor_inse, inse_classificacao2014, inse_classificacao2015, regiao)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                     e.getAno(),
                     e.getIdMunicipio(),
@@ -35,7 +35,8 @@ public class DAO {
                     e.getInseQuantidadeAlunos(),
                     e.getValorInse(),
                     e.getInseClassificacao2014(),
-                    e.getInseClassificacao2015()
+                    e.getInseClassificacao2015(),
+                    e.getRegiao()
             );
             Log log = new Log("Linha " + contador + " adicionada");
             salvarLogIndividual(log);

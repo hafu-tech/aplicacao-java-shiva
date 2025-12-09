@@ -11,6 +11,7 @@ public class Escola {
     private Double valorInse;
     private String inseClassificacao2014;
     private String inseClassificacao2015;
+    private String regiao;
 
     public Escola() {
     }
@@ -95,6 +96,14 @@ public class Escola {
         this.inseClassificacao2015 = inseClassificacao2015;
     }
 
+    public String getRegiao() {
+        return regiao;
+    }
+
+    public void setRegiao(String regiao) {
+        this.regiao = regiao;
+    }
+
     @Override
     public String toString() {
         return "Escola{" +
@@ -108,6 +117,7 @@ public class Escola {
                 ", valorInse=" + valorInse +
                 ", inseClassificacao2014='" + inseClassificacao2014 + '\'' +
                 ", inseClassificacao2015='" + inseClassificacao2015 + '\'' +
+                ", regiao='" + regiao + '\'' +
                 '}';
     }
 }

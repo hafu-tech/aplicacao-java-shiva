@@ -1,5 +1,6 @@
 package school.sptech;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +16,9 @@ public class Main {
                 DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss");
 
         try {
-            S3Reader s3 = new S3Reader();
-            InputStream arquivo = s3.getFileFromS3("s3-raw-hafu", nomeArquivo);
+            /*S3Reader s3 = new S3Reader();*/
+            InputStream arquivo = new FileInputStream(nomeArquivo);
+
 
             LeitorExcel leitorExcel = new LeitorExcel();
             List<Escola> escolasExtraidas = leitorExcel.extrairEscolas(nomeArquivo, arquivo);
