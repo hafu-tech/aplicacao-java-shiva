@@ -52,21 +52,29 @@ public class DAO {
 
     private void salvarLogs(int quantidade) {
 
-        String sql = """
-            INSERT INTO Log_sistema
-            (data_hora, descricao_log, qtd_registro, fk_status)
-            VALUES (?, ?, ?, ?)
-        """;
+    String sql = """
+        INSERT INTO Log_sistema
+        (data_hora, descricao_log, qtd_registro, fk_status)
+        VALUES (?, ?, ?, ?)
+    """;
 
-        List<LogSistema> logs = java.util.stream.IntStream.rangeClosed(1, quantidade)
-                .mapToObj(i -> new LogSistema("Linha " + i + " adicionada"))
-                .toList();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        jdbcTemplate.batchUpdate(sql, logs, logs.size(), (ps, log) -> {
-            ps.setString(1, log.getData());
-            ps.setString(2, log.getDescricao());
-            ps.setInt(3, log.getQtdRegistro());
-            ps.setObject(4, log.getFkStatus());
-        });
-    }
+    List<LogSistema> logs = java.util.stream.IntStream.rangeClosed(1, quantidade)
+            .mapToObj(i -> new LogSistema(
+                    LocalDateTime.now().format(formatter), // data_hora
+                    "Linha " + i + " adicionada",          // descricao
+                    1,                                     // qtd_registros
+                    null                                   // fk_status
+            ))
+            .toList();
+
+    jdbcTemplate.batchUpdate(sql, logs, logs.size(), (ps, log) -> {
+        ps.setString(1, log.getData());            // CERTA
+        ps.setString(2, log.getDescricao());       // CERTA
+        ps.setInt(3, log.getQtdRegistros());       // DE ACORDO COM MAVEN
+        ps.setObject(4, log.getFkStatus());        // CERTA
+    });
 }
+
+
