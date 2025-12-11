@@ -76,5 +76,6 @@ public class DAO {
         ps.setObject(4, log.getFkStatus());        
     });
 }
+}
 
 
