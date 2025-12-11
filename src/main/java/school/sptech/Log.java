@@ -11,8 +11,7 @@ public abstract class Log {
     private Integer qtdRegistros;
     private Integer fkStatus;
 
-    public Log(Integer id, String data, String descricao, Integer qtdRegistros, Integer fkStatus) {
-        this.id = id;
+    public Log(String data, String descricao, Integer qtdRegistros, Integer fkStatus) {
         this.data = data;
         this.descricao = descricao;
         this.qtdRegistros = qtdRegistros;
@@ -21,6 +20,7 @@ public abstract class Log {
         LocalDateTime dataHora = LocalDateTime.now();
         this.data = dataHora.format(formatter);
     }
+
 
     public Integer getId() {
         return id;
