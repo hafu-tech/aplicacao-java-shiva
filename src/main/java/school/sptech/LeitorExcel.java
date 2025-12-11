@@ -48,7 +48,7 @@ public class LeitorExcel {
                 if (row.getCell(3).getCellType() == CellType.STRING) {
                     escola.setArea(row.getCell(3).getStringCellValue());
                 } else if (row.getCell(3).getCellType() == CellType.NUMERIC) {
-                    escola.setArea(String.valueOf(row.getCell(3).getNumericCellValue()));
+                    escola.setArea("não especificado");
                 } else {
                     escola.setArea(null);
                 }
