@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.List;
 
+
 public class DAO {
     private JdbcTemplate jdbcTemplate;
 
@@ -17,31 +18,32 @@ public class DAO {
     }
 
     public void salvarLista(List<Escola> escolas) {
-        int contador = 1;
-        for (Escola e : escolas) {
-            jdbcTemplate.update(
-                """
-                INSERT INTO Escola
-                (ano, id_municipio, id_escola, area, localizacao, rede,
-                 inse_qtd_alunos, valor_inse, inse_classificacao2014, inse_classificacao2015, regiao)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                    e.getAno(),
-                    e.getIdMunicipio(),
-                    e.getIdEscola(),
-                    e.getArea(),
-                    e.getLocalizacao(),
-                    e.getRede(),
-                    e.getInseQuantidadeAlunos(),
-                    e.getValorInse(),
-                    e.getInseClassificacao2014(),
-                    e.getInseClassificacao2015(),
-                    e.getRegiao()
-            );
-            Log log = new Log("Linha " + contador + " adicionada");
-            salvarLogIndividual(log);
-            contador++;
-        }
+        String sql = """
+            INSERT INTO Escola
+            (ano, id_municipio, id_escola, area, localizacao, rede,
+             inse_qtd_alunos, valor_inse, inse_classificacao2014, inse_classificacao2015, regiao)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
+
+        List<Object[]> batchArgs = escolas.stream()
+            .map(e -> new Object[]{
+                e.getAno(),
+                e.getIdMunicipio(),
+                e.getIdEscola(),
+                e.getArea(),
+                e.getLocalizacao(),
+                e.getRede(),
+                e.getInseQuantidadeAlunos(),
+                e.getValorInse(),
+                e.getInseClassificacao2014(),
+                e.getInseClassificacao2015(),
+                e.getRegiao()
+            })
+            .toList();
+
+        jdbcTemplate.batchUpdate(sql, batchArgs);
+        
+
     }
 
     public void salvarLogIndividual(Log log) {
