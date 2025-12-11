@@ -43,13 +43,13 @@ public class DAO {
         jdbcTemplate.batchUpdate(sql, batchArgs);
     }
 
-    public void salvarLogIndividual(Log log) {
+    public void salvarLogIndividual(LogSistema logSistema) {
         jdbcTemplate.update("""
             INSERT INTO Log_sistema
             (descricao_log)
             VALUES (?)
         """,
-                log.getDescricao()
+                logSistema.getDescricao()
         );
     }
 }
