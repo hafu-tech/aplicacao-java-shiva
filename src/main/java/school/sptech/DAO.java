@@ -40,7 +40,7 @@ public class DAO {
                         e.getRegiao()
                 })
                 .toList();
-            Log log = new Log("Linha " + contador + " adicionada"); 
+            Log log = new LogSistema("Linha " + contador + " adicionada"); 
             salvarLogIndividual(log); contador++;
         jdbcTemplate.batchUpdate(sql, batchArgs);
     }
