@@ -5,6 +5,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.List;
 
 public class DAO {
+
     private JdbcTemplate jdbcTemplate;
 
     public DAO() {
@@ -13,11 +14,12 @@ public class DAO {
         dataSource.setUrl("jdbc:mysql://3.225.191.55:3306/hafutech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("@Hafu2025");
+
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void salvarLista(List<Escola> escolas) {
-        int contador = 1;
+
         String sql = """
             INSERT INTO Escola
             (ano, id_municipio, id_escola, area, localizacao, rede,
@@ -25,6 +27,7 @@ public class DAO {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
+        
         List<Object[]> batchArgs = escolas.stream()
                 .map(e -> new Object[]{
                         e.getAno(),
@@ -40,18 +43,30 @@ public class DAO {
                         e.getRegiao()
                 })
                 .toList();
-            Log log = new LogSistema("Linha " + contador + " adicionada"); 
-            salvarLogIndividual(log); contador++;
+
         jdbcTemplate.batchUpdate(sql, batchArgs);
+
+       
+        salvarLogs(escolas.size());
     }
 
-    public void salvarLogIndividual(LogSistema logSistema) {
-        jdbcTemplate.update("""
+    private void salvarLogs(int quantidade) {
+
+        String sql = """
             INSERT INTO Log_sistema
-            (descricao_log )
-            VALUES (?)
-        """,
-                logSistema.getDescricao()
-        );
+            (data_hora, descricao_log, qtd_registro, fk_status)
+            VALUES (?, ?, ?, ?)
+        """;
+
+        List<LogSistema> logs = java.util.stream.IntStream.rangeClosed(1, quantidade)
+                .mapToObj(i -> new LogSistema("Linha " + i + " adicionada"))
+                .toList();
+
+        jdbcTemplate.batchUpdate(sql, logs, logs.size(), (ps, log) -> {
+            ps.setString(1, log.getData());
+            ps.setString(2, log.getDescricao());
+            ps.setInt(3, log.getQtdRegistro());
+            ps.setObject(4, log.getFkStatus());
+        });
     }
 }
